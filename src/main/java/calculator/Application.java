@@ -22,15 +22,29 @@ public class Application {
             return new int[]{0};
         }
         
-        // 2. 기본 구분자
-        String[] str = input.split(",|:");
-        
-        // 3. string to int
-        int[] numbers = new int[str.length];
+        // 2. 구분자 인식
+        String delimiter = ",|:";
+        String numbers = input;
+            
+        if (input.startsWith("//")) {
+            int endIdx = input.indexOf("\\n");
+            delimiter = input.substring(2, endIdx);
+            numbers = input.substring(endIdx + 2);
+        }
+
+        // 3. 구분자 분리
+        String[] str = numbers.split(delimiter);
+
+        // 4. string to int
+        int[] result = new int[str.length];
         for (int i = 0; i < str.length; i++) {
-            numbers[i] = Integer.parseInt(str[i]);
+            result[i] = Integer.parseInt(str[i]);
+
+            if (result[i] < 0) {
+                throw new IllegalArgumentException("음수는 입력할 수 없습니다.");
+            }
         }
         
-        return numbers;
+        return result;
     }
 }
