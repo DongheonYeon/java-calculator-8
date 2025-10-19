@@ -17,6 +17,20 @@ public class Application {
     }
 
     public static int[] parseString(String input) {
-        return new int[0];
+        // 1. 빈 문자열
+        if (input.isEmpty()) {
+            return new int[]{0};
+        }
+        
+        // 2. 기본 구분자
+        String[] str = input.split(",|:");
+        
+        // 3. string to int
+        int[] numbers = new int[str.length];
+        for (int i = 0; i < str.length; i++) {
+            numbers[i] = Integer.parseInt(str[i]);
+        }
+        
+        return numbers;
     }
 }
