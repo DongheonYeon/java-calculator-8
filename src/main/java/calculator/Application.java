@@ -28,6 +28,9 @@ public class Application {
             
         if (input.startsWith("//")) {
             int endIdx = input.indexOf("\\n");
+            if (endIdx == -1) {
+                throw new IllegalArgumentException("잘못된 커스텀 구분자 형식입니다.");
+            }
             delimiter = input.substring(2, endIdx);
             numbers = input.substring(endIdx + 2);
         }
@@ -38,10 +41,14 @@ public class Application {
         // 4. string to int
         int[] result = new int[str.length];
         for (int i = 0; i < str.length; i++) {
-            result[i] = Integer.parseInt(str[i]);
-
-            if (result[i] < 0) {
-                throw new IllegalArgumentException("음수는 입력할 수 없습니다.");
+            try {
+                int num = Integer.parseInt(str[i].trim());
+                if (num < 0) {
+                    throw new IllegalArgumentException("음수 값이 있습니다.");
+                }
+                    result[i] = num;
+            } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("숫자가 아닌 값이 있습니다.");
             }
         }
         
